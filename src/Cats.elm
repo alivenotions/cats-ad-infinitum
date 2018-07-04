@@ -1,5 +1,6 @@
 import Html exposing (..)
 import Html.Events exposing (onClick)
+import Html.Attributes exposing (..)
 
 main : Program Never Model Msg
 main =
@@ -27,6 +28,6 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-  div []
+  div [id "wrapper"]
     [ button [onClick HelloToBD] [text "SayHello"]
     , text model ]
