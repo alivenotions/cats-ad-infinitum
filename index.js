@@ -1,5 +1,5 @@
 require('./index.html')
-const Elm = require('./src/Hello.elm')
+const Elm = require('./src/Cats.elm')
 
 const mountNode = document.getElementById('main')
 
