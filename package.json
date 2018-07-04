@@ -4,7 +4,7 @@
   "description": "Cats for all day long",
   "main": "index.html",
   "scripts": {
-    "start": "webpack-dev-server --mode development"
+    "start": "webpack-dev-server --hot --mode development"
   },
   "repository": {
     "type": "git",
