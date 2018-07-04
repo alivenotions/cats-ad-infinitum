@@ -1,4 +1,5 @@
 import Html exposing (..)
+import Html.Events exposing (onClick)
 
 main : Program Never Model Msg
 main =
@@ -10,7 +11,7 @@ type alias Model = String
 
 model : Model
 model =
-  "Hello World"
+  "Hello World!"
 
 -- UPDATE
 
@@ -24,6 +25,8 @@ update msg model =
 
 -- VIEW
 
-view : Model -> Html a
+view : Model -> Html Msg
 view model =
-  text model
+  div []
+    [ button [onClick HelloToBD] [text "SayHello"]
+    , text model ]
