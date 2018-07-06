@@ -19,11 +19,12 @@ type alias Model =
   { heading : String
   , gifUrl : String
   , topic : String
+  , inspirationMsg : String
   }
 
 init: String -> String -> (Model, Cmd Msg)
 init heading topic =
-  ( Model heading "#" topic
+  ( Model heading "#" topic "Nothing like a cup of cat to cheer you"
   , getRandomGif topic
   )
 
@@ -68,6 +69,7 @@ view : Model -> Html Msg
 view model =
   div [class "center-wrapper"]
     [ h1 [] [ text model.heading ]
+    , p [] [ text model.inspirationMsg ]
     , img [ src model.gifUrl ] [] ]
 
 -- SUBSCRIPTIONS
