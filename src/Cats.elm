@@ -2,11 +2,12 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Http
 import Json.Decode as Decode
+import Time exposing (..)
 
 main : Program Never Model Msg
 main =
   Html.program 
-  { init = init "Cats ad infinitum"
+  { init = init "Cats ad infinitum" "cute+cats"
   , view = view
   , update = update
   , subscriptions = subscriptions
@@ -15,20 +16,22 @@ main =
 -- MODEL
 
 type alias Model =
-  { topic : String
+  { heading : String
   , gifUrl : String
+  , topic : String
   }
 
-init: String -> (Model, Cmd Msg)
-init topic =
-  ( Model topic "#"
-  , getRandomGif "cute+cats"
+init: String -> String -> (Model, Cmd Msg)
+init heading topic =
+  ( Model heading "#" topic
+  , getRandomGif topic
   )
 
 -- UPDATE
 
 type Msg
   = NewGif (Result Http.Error String)
+  | UpdateGif Time
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
@@ -39,6 +42,9 @@ update msg model =
 
     NewGif (Err _) ->
       (model, Cmd.none)
+
+    UpdateGif _ ->
+      (model, Cmd.batch [getRandomGif (.topic model)])
 
 getRandomGif : String -> Cmd Msg
 getRandomGif topic =
@@ -61,11 +67,11 @@ decodeGifUrl =
 view : Model -> Html Msg
 view model =
   div [class "center-wrapper"]
-    [ h1 [] [ text model.topic ]
+    [ h1 [] [ text model.heading ]
     , img [ src model.gifUrl ] [] ]
 
 -- SUBSCRIPTIONS
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-  Sub.none
+  Time.every (5 * Time.second) UpdateGif
